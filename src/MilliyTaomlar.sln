@@ -7,24 +7,33 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{26
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{F3E8E053-89BD-4DFE-93D3-BAE383DEAB65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog", "Services\Catalog\Catalog.API\Catalog.csproj", "{149E8A76-3E89-465B-BC1F-F44B8CF160ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.API", "Services\Catalog\Catalog.API\Catalog.API.csproj", "{149E8A76-3E89-465B-BC1F-F44B8CF160ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{4F52FD11-658E-A102-6CD3-7D7C16FFA15B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{67E938A4-D1C5-4635-B75C-F5ED632EDEF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{149E8A76-3E89-465B-BC1F-F44B8CF160ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{149E8A76-3E89-465B-BC1F-F44B8CF160ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{149E8A76-3E89-465B-BC1F-F44B8CF160ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{149E8A76-3E89-465B-BC1F-F44B8CF160ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67E938A4-D1C5-4635-B75C-F5ED632EDEF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67E938A4-D1C5-4635-B75C-F5ED632EDEF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67E938A4-D1C5-4635-B75C-F5ED632EDEF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67E938A4-D1C5-4635-B75C-F5ED632EDEF9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F3E8E053-89BD-4DFE-93D3-BAE383DEAB65} = {26989A82-8DA5-4477-A622-6A4C8A57E5BC}
 		{149E8A76-3E89-465B-BC1F-F44B8CF160ED} = {F3E8E053-89BD-4DFE-93D3-BAE383DEAB65}
+		{67E938A4-D1C5-4635-B75C-F5ED632EDEF9} = {4F52FD11-658E-A102-6CD3-7D7C16FFA15B}
 	EndGlobalSection
 EndGlobal
