@@ -1,22 +1,15 @@
 namespace Catalog.API.Products.CreateProduct.Handler;
 
-using Catalog.API.Entities;
-using Shared.CQRS;
-
-internal class CreateProductHandler
+internal class CreateProductHandler(IDocumentSession session)
     : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(
         CreateProductCommand command, CancellationToken cancellationToken)
     {
-        var product = new Product
-        {
-            Name = command.Name,
-            Categories = command.Categories,
-            Description = command.Description,
-            ImageFile = command.ImageFile,
-            Price = command.Price,
-        };
+        var product = command.ToEntity();
+
+        session.Store(product);
+        await session.SaveChangesAsync(cancellationToken);
 
         return new CreateProductResult(product.Id);
     }
