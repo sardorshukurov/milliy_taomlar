@@ -9,13 +9,14 @@ public class GetProductByIdEndpoint : ICarterModule
         {
             var request = new GetProductByIdRequest(id);
             var result = await sender.Send(request.ToQuery());
+            var response = result.ToResponse();
 
-            if (result.Product is null)
+            if (response.Product is null)
             {
                 return Results.NotFound();
             }
 
-            return Results.Ok(result.Product);
+            return Results.Ok(response);
         })
         .WithName("GetProductById")
         .Produces<GetProductByIdResponse>(StatusCodes.Status200OK)

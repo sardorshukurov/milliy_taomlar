@@ -9,4 +9,9 @@ public static class Mapper
     {
         return new GetProductByIdQuery(request.Id);
     }
+
+    public static GetProductByIdResponse ToResponse(this GetProductByIdResult result)
+    {
+        return new GetProductByIdResponse(result.Product);
+    }
 }

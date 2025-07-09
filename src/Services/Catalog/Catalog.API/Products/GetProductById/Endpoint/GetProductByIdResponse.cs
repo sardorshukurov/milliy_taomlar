@@ -1,8 +1,5 @@
-using System;
-
 namespace Catalog.API.Products.GetProductById.Endpoint;
 
-public class GetProductByIdResponse
-{
+using Catalog.API.Products.GetProducts.Dtos;
 
-}
+public record GetProductByIdResponse(ProductDto? Product);

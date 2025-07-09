@@ -1,6 +1,7 @@
 namespace Catalog.API.Products.GetProducts;
 
 using Catalog.API.Entities;
+using Catalog.API.Products.GetProducts.Dtos;
 using Catalog.API.Products.GetProducts.Endpoint;
 using Catalog.API.Products.GetProducts.Handler;
 
