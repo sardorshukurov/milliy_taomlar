@@ -1,5 +1,6 @@
-
 namespace Catalog.API.Products.GetProductById.Endpoint;
+
+using Handler;
 
 public class GetProductByIdEndpoint : ICarterModule
 {
@@ -7,19 +8,16 @@ public class GetProductByIdEndpoint : ICarterModule
     {
         app.MapGet("/products/{id}", async (Guid id, ISender sender) =>
         {
-            var request = new GetProductByIdRequest(id);
-            var result = await sender.Send(request.ToQuery());
+            var query = new GetProductByIdQuery(id);
+            var result = await sender.Send(query);
             var response = result.ToResponse();
 
-            if (response.Product is null)
-            {
-                return Results.NotFound();
-            }
-
-            return Results.Ok(response);
+            return response.Product is null
+                ? Results.NotFound()
+                : Results.Ok(response);
         })
         .WithName("GetProductById")
-        .Produces<GetProductByIdResponse>(StatusCodes.Status200OK)
+        .Produces<GetProductByIdResponse>()
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status404NotFound)
         .WithSummary("Get Product By Id")

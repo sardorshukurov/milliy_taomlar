@@ -1,6 +1,6 @@
-namespace Catalog.API.Products.Dtos;
+namespace Catalog.API.Products.UpdateProduct.Endpoint;
 
-public record ProductDto(
+public record UpdateProductRequest(
     Guid Id,
     string Name,
     IList<string> Categories,

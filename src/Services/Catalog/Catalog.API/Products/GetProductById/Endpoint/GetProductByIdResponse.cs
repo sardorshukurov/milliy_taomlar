@@ -1,5 +1,5 @@
-namespace Catalog.API.Products.GetProductById.Endpoint;
+using Catalog.API.Products.Dtos;
 
-using Catalog.API.Products.GetProducts.Dtos;
+namespace Catalog.API.Products.GetProductById.Endpoint;
 
 public record GetProductByIdResponse(ProductDto? Product);

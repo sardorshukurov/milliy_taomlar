@@ -1,5 +1,5 @@
-namespace Catalog.API.Products.GetProductById.Handler;
+using Catalog.API.Products.Dtos;
 
-using Catalog.API.Products.GetProducts.Dtos;
+namespace Catalog.API.Products.GetProductById.Handler;
 
 public record GetProductByIdResult(ProductDto? Product);

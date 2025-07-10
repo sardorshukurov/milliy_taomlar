@@ -1,7 +1,7 @@
 namespace Catalog.API.Products.GetProductsByCategory;
 
-using Catalog.API.Products.GetProductsByCategory.Endpoint;
-using Catalog.API.Products.GetProductsByCategory.Handler;
+using Endpoint;
+using Handler;
 
 public static class Mapper
 {

@@ -1,16 +1,12 @@
 namespace Catalog.API.Products.GetProductById;
 
-using Catalog.API.Products.GetProductById.Endpoint;
-using Catalog.API.Products.GetProductById.Handler;
+using Endpoint;
+using Handler;
 
 public static class Mapper
 {
-    public static GetProductByIdQuery ToQuery(this GetProductByIdRequest request)
-    {
-        return new GetProductByIdQuery(request.Id);
-    }
-
-    public static GetProductByIdResponse ToResponse(this GetProductByIdResult result)
+    public static GetProductByIdResponse ToResponse(
+        this GetProductByIdResult result)
     {
         return new GetProductByIdResponse(result.Product);
     }

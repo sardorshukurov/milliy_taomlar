@@ -1,8 +1,8 @@
 namespace Catalog.API.Products.CreateProduct;
 
-using Catalog.API.Entities;
-using Catalog.API.Products.CreateProduct.Endpoint;
-using Catalog.API.Products.CreateProduct.Handler;
+using Entities;
+using Endpoint;
+using Handler;
 
 public static class Mapper
 {

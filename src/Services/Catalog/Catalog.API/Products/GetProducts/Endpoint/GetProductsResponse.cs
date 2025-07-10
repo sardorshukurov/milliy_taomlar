@@ -1,5 +1,5 @@
-namespace Catalog.API.Products.GetProducts.Endpoint;
+using Catalog.API.Products.Dtos;
 
-using Catalog.API.Products.GetProducts.Dtos;
+namespace Catalog.API.Products.GetProducts.Endpoint;
 
 public record GetProductsResponse(IEnumerable<ProductDto> Products);

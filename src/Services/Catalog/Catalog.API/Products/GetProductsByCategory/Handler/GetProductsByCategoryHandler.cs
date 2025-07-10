@@ -1,8 +1,8 @@
 
 namespace Catalog.API.Products.GetProductsByCategory.Handler;
 
-using Catalog.API.Entities;
-using Catalog.API.Products.GetProducts;
+using Entities;
+using GetProducts;
 
 public class GetProductsByCategoryHandler(
     IDocumentSession session, ILogger<GetProductsByCategoryHandler> logger)
