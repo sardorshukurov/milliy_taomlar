@@ -3,15 +3,12 @@ namespace Catalog.API.Products.DeleteProduct.Handler;
 using System.Net;
 using Entities;
 
-public class DeleteProductHandler(
-    IDocumentSession session, ILogger<DeleteProductHandler> logger)
+public class DeleteProductHandler(IDocumentSession session)
     : ICommandHandler<DeleteProductCommand>
 {
     public async Task<Response<Unit>> Handle(
         DeleteProductCommand command, CancellationToken cancellationToken)
     {
-        logger.LogHandler(nameof(DeleteProductHandler), command.ToString());
-
         var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
 
         if (product is null)

@@ -1,7 +1,6 @@
 namespace Shared.Behaviors;
 
 using System.Net;
-using CQRS;
 using FluentValidation;
 using MediatR;
 using Models;
@@ -19,8 +18,6 @@ public class ValidationBehavior<TRequest, TResponse>(
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        logger.LogWarning("====== ValidationBehavior.Handle called ======");
-
         if (!validators.Any())
         {
             logger.LogWarning("No validators found for {RequestType} - proceeding to next handler", typeof(TRequest).Name);
@@ -48,17 +45,14 @@ public class ValidationBehavior<TRequest, TResponse>(
             if (typeof(TResponse).IsGenericType &&
                 typeof(TResponse).GetGenericTypeDefinition() == typeof(Response<>))
             {
-                var innerType = typeof(TResponse).GetGenericArguments()[0];
                 var responseInstance = Activator.CreateInstance(typeof(TResponse),
-                    false,
-                    (int)HttpStatusCode.BadRequest,
-                    null,
-                    ValidationHelper.GetValidationErrorMessage(failures));
+                    false,                                                    // IsSuccess
+                    (int)HttpStatusCode.BadRequest,                          // StatusCode
+                    null,                                                    // Result
+                    ValidationHelper.GetValidationErrorMessage(failures),   // ErrorMessage
+                    null);                                                   // ErrorDetails
                 return (TResponse)responseInstance!;
             }
-
-            // Fallback - throw exception for non-Response types
-            throw new ValidationException(failures);
         }
 
         logger.LogWarning("Validation passed - proceeding to next handler");

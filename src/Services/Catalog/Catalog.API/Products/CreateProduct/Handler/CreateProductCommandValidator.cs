@@ -9,8 +9,8 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
         RuleFor(x => x.Name)
             .NotEmpty()
             .WithMessage("Product name is required.")
-            .MaximumLength(100)
-            .WithMessage("Product name must not exceed 100 characters.");
+            .Length(2, 100)
+            .WithMessage("Product name must be between 2 and 100 characters.");
 
         RuleFor(x => x.Description)
             .MaximumLength(500)

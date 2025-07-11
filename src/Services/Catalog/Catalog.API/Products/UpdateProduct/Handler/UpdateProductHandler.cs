@@ -3,15 +3,12 @@ namespace Catalog.API.Products.UpdateProduct.Handler;
 using System.Net;
 using Entities;
 
-public class UpdateProductHandler(
-    IDocumentSession session, ILogger<UpdateProductHandler> logger)
+public class UpdateProductHandler(IDocumentSession session)
     : ICommandHandler<UpdateProductCommand>
 {
     public async Task<Response<Unit>> Handle(
         UpdateProductCommand command, CancellationToken cancellationToken)
     {
-        logger.LogHandler(nameof(UpdateProductHandler), command.ToString());
-
         var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
 
         if (product is null)

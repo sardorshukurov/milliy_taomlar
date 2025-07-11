@@ -1,14 +1,11 @@
 namespace Catalog.API.Products.CreateProduct.Handler;
 
-internal class CreateProductHandler(
-    IDocumentSession session, ILogger<CreateProductHandler> logger)
+internal class CreateProductHandler(IDocumentSession session)
     : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<Response<CreateProductResult>> Handle(
         CreateProductCommand command, CancellationToken cancellationToken)
     {
-        logger.LogHandler(nameof(CreateProductHandler), command.ToString());
-
         var product = command.ToEntity();
 
         session.Store(product);
