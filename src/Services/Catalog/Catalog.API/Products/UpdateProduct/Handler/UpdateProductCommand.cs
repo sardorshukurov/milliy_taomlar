@@ -6,4 +6,4 @@ public record UpdateProductCommand(
     IList<string> Categories,
     string Description,
     string ImageFile,
-    decimal Price) : ICommand<UpdateProductResult>;
+    decimal Price) : ICommand;

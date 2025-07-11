@@ -11,12 +11,17 @@ public class CreateProductEndpoint : ICarterModule
 
             var result = await sender.Send(command);
 
+            if (result.IsSuccess is false || result.Result is null)
+            {
+                return Results.BadRequest(result);
+            }
+
             var response = result.ToResponse();
 
-            return Results.Created($"/products/{response.Id}", response);
+            return Results.Created($"/products/{response.Result!.Id}", response);
         })
         .WithName("CreateProduct")
-        .Produces<CreateProductResponse>(StatusCodes.Status201Created)
+        .Produces<Response<CreateProductResponse>>(StatusCodes.Status201Created)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .WithSummary("Create Product")
         .WithDescription("Create Product");

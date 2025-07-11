@@ -8,14 +8,13 @@ public class UpdateProductEndpoint : ICarterModule
         {
             var command = request.ToCommand();
             var result = await sender.Send(command);
-            var response = result.ToResponse();
 
-            return response.IsSuccess
-                ? Results.Ok(response)
-                : Results.BadRequest(response);
+            return result.IsSuccess
+                ? Results.Ok(result)
+                : Results.BadRequest(result);
         })
         .WithName("UpdateProduct")
-        .Produces<UpdateProductResponse>()
+        .Produces<Response<Unit>>()
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .WithSummary("Update Product")
         .WithDescription("Update Product");

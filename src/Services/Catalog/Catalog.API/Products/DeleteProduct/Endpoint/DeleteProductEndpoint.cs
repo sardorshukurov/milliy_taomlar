@@ -10,14 +10,13 @@ public class DeleteProductEndpoint : ICarterModule
         {
             var command = new DeleteProductCommand(id);
             var result = await sender.Send(command);
-            var response = result.ToResponse();
-            
-            return response.IsSuccess
+
+            return result.IsSuccess
                 ? Results.NoContent()
-                : Results.BadRequest(response);
+                : Results.BadRequest(result);
         })
         .WithName("DeleteProduct")
-        .Produces<DeleteProductResponse>(StatusCodes.Status204NoContent)
+        .Produces<Response<Unit>>(StatusCodes.Status204NoContent)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .WithSummary("Delete Product")
         .WithDescription("Delete Product");

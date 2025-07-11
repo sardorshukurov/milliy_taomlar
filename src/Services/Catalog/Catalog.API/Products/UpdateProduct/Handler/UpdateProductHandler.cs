@@ -1,12 +1,13 @@
 namespace Catalog.API.Products.UpdateProduct.Handler;
 
+using System.Net;
 using Entities;
 
-public class UpdateProductHandler (
+public class UpdateProductHandler(
     IDocumentSession session, ILogger<UpdateProductHandler> logger)
-    : ICommandHandler<UpdateProductCommand, UpdateProductResult>
+    : ICommandHandler<UpdateProductCommand>
 {
-    public async Task<UpdateProductResult> Handle(
+    public async Task<Response<Unit>> Handle(
         UpdateProductCommand command, CancellationToken cancellationToken)
     {
         logger.LogHandler(nameof(UpdateProductHandler), command.ToString());
@@ -15,18 +16,23 @@ public class UpdateProductHandler (
 
         if (product is null)
         {
-            return new UpdateProductResult(false);
+            return new Response<Unit>(
+                false,
+                (int)HttpStatusCode.NotFound,
+                new Unit(),
+                "Product not found");
         }
-        
+
         product.Name = command.Name;
         product.Categories = command.Categories;
         product.Description = command.Description;
         product.ImageFile = command.ImageFile;
         product.Price = command.Price;
-        
+
         session.Update(product);
         await session.SaveChangesAsync(cancellationToken);
 
-        return new UpdateProductResult(true);
+        return new Response<Unit>(
+            true, (int)HttpStatusCode.OK, new Unit());
     }
 }

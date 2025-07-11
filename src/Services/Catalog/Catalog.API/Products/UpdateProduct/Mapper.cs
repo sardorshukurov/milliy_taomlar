@@ -12,12 +12,7 @@ public static class Mapper
          request.Name,
          request.Categories,
          request.Description,
-         request.ImageFile, 
+         request.ImageFile,
          request.Price);
-   } 
-   
-   public static UpdateProductResponse ToResponse(this UpdateProductResult result)
-   {
-      return new UpdateProductResponse(result.IsSuccess);
    }
 }

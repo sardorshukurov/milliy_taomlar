@@ -16,9 +16,14 @@ public static class Mapper
             request.Price);
     }
 
-    public static CreateProductResponse ToResponse(this CreateProductResult result)
+    public static Response<CreateProductResponse> ToResponse(this Response<CreateProductResult> result)
     {
-        return new(result.Id);
+        return new(
+            result.IsSuccess,
+            result.StatusCode,
+            result.Result is null
+                ? null
+                : new(result.Result.Id));
     }
 
     public static Product ToEntity(this CreateProductCommand command)

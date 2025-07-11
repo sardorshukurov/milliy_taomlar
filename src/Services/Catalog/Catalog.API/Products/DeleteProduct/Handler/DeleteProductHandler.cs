@@ -1,26 +1,32 @@
 namespace Catalog.API.Products.DeleteProduct.Handler;
 
+using System.Net;
 using Entities;
 
-public class DeleteProductHandler (
+public class DeleteProductHandler(
     IDocumentSession session, ILogger<DeleteProductHandler> logger)
-    : ICommandHandler<DeleteProductCommand, DeleteProductResult>
+    : ICommandHandler<DeleteProductCommand>
 {
-    public async Task<DeleteProductResult> Handle(
+    public async Task<Response<Unit>> Handle(
         DeleteProductCommand command, CancellationToken cancellationToken)
     {
         logger.LogHandler(nameof(DeleteProductHandler), command.ToString());
 
         var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
-        
+
         if (product is null)
         {
-            return new DeleteProductResult(false);
+            return new Response<Unit>(
+                false,
+                (int)HttpStatusCode.NotFound,
+                new Unit(),
+                "Product not found");
         }
-        
+
         session.Delete(product);
         await session.SaveChangesAsync(cancellationToken);
-        
-        return new DeleteProductResult(true);
+
+        return new Response<Unit>(
+            true, (int)HttpStatusCode.OK, new Unit());
     }
 }
