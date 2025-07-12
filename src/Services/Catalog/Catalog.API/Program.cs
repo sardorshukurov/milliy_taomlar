@@ -1,3 +1,4 @@
+using Catalog.API.Data;
 using FluentValidation;
 using Shared.Behaviors;
 using Shared.Middlewares;
@@ -19,6 +20,12 @@ builder.Services
     {
         options.Connection(builder.Configuration.GetConnectionString("Database") ?? string.Empty);
     }).UseLightweightSessions();
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.InitializeMartenWith<CatalogInitialData>();
+}
+
 
 var app = builder.Build();
 

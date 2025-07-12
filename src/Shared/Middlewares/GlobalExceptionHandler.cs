@@ -15,22 +15,22 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
         logger.LogError("Error Message: {exceptionMessage}, Time of Occurence: {time}",
             exception.Message, DateTime.UtcNow);
 
-        var (details, message, statusCode) = exception switch
+        var (stackTrace, message, statusCode) = exception switch
         {
             ArgumentException => (
-                Details: exception.StackTrace,
-                Message: exception.Message,
-                StatusCode: StatusCodes.Status400BadRequest
+                exception.StackTrace,
+                exception.Message,
+                StatusCodes.Status400BadRequest
             ),
             InvalidOperationException => (
-                Details: exception.StackTrace,
-                Message: exception.Message,
-                StatusCode: StatusCodes.Status400BadRequest
+                exception.StackTrace,
+                exception.Message,
+                StatusCodes.Status400BadRequest
             ),
             _ => (
-                Details: exception.StackTrace,
-                Message: exception.Message,
-                StatusCode: StatusCodes.Status500InternalServerError
+                exception.StackTrace,
+                exception.Message,
+                StatusCodes.Status500InternalServerError
             )
         };
         
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
             statusCode,
             new Unit(),
             message,
-            details?.Trim()
+            stackTrace?.Trim()
         );
         
         await context.Response.WriteAsJsonAsync(response, cancellationToken);

@@ -13,11 +13,12 @@ public class DeleteProductEndpoint : ICarterModule
 
             return result.IsSuccess
                 ? Results.NoContent()
-                : Results.BadRequest(result);
+                : Results.NotFound(result);
         })
         .WithName("DeleteProduct")
         .Produces<Response<Unit>>(StatusCodes.Status204NoContent)
         .ProducesProblem(StatusCodes.Status400BadRequest)
+        .ProducesProblem(StatusCodes.Status404NotFound)
         .WithSummary("Delete Product")
         .WithDescription("Delete Product");
     }
