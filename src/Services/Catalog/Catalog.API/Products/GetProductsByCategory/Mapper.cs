@@ -10,8 +10,14 @@ public static class Mapper
         return new GetProductsByCategoryQuery(request.Category);
     }
 
-    public static GetProductsByCategoryResponse ToResponse(this GetProductsByCategoryResult result)
+    public static Response<GetProductsByCategoryResponse> ToResponse(
+        this Response<GetProductsByCategoryResult> result)
     {
-        return new GetProductsByCategoryResponse(result.Products);
+        return new(
+            result.IsSuccess,
+            result.StatusCode,
+            new GetProductsByCategoryResponse(result.Result?.Products ?? []),
+            result.ErrorMessage,
+            result.ErrorDetails);
     }
 }

@@ -9,10 +9,9 @@ public class GetProductsByCategoryEndpoint : ICarterModule
             async (string category, ISender sender) =>
             {
                 var request = new GetProductsByCategoryRequest(category);
-                var result = await sender.Send(request.ToQuery());
-                var response = result.ToResponse();
+                var response = (await sender.Send(request.ToQuery())).ToResponse();
 
-                return Results.Ok(response);
+                return response.ToResult(res => Results.Ok(res));
             })
             .WithName("GetProductByCategory")
             .Produces<GetProductsByCategoryResponse>()

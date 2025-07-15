@@ -23,7 +23,9 @@ public static class Mapper
             result.StatusCode,
             result.Result is null
                 ? null
-                : new(result.Result.Id));
+                : new(result.Result.Id),
+            result.ErrorMessage,
+            result.ErrorDetails);
     }
 
     public static Product ToEntity(this CreateProductCommand command)

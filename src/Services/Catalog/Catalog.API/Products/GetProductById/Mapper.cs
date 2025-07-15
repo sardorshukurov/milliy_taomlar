@@ -5,9 +5,15 @@ using Handler;
 
 public static class Mapper
 {
-    public static GetProductByIdResponse ToResponse(
-        this GetProductByIdResult result)
+    public static Response<GetProductByIdResponse> ToResponse(
+        this Response<GetProductByIdResult> result)
     {
-        return new GetProductByIdResponse(result.Product);
+        return new(
+            result.IsSuccess,
+            result.StatusCode,
+            new(result.Result?.Product),
+            result.ErrorMessage,
+            result.ErrorMessage
+        );
     }
 }

@@ -6,9 +6,9 @@ using Entities;
 using Dtos;
 
 public class GetProductsHandler(IDocumentSession session)
-    : IQueryHandler<GetProductsQuery, PagedResponse<ProductDto>>
+    : IPagedQueryHandler<GetProductsQuery, ProductDto>
 {
-    public async Task<PagedResponse<ProductDto>> Handle(
+    public async Task<Response<PagedResponse<ProductDto>>> Handle(
         GetProductsQuery query, CancellationToken cancellationToken)
     {
         var productQuery = session.Query<Product>().AsQueryable();
@@ -70,12 +70,18 @@ public class GetProductsHandler(IDocumentSession session)
 
         var productDtos = products.Select(p => p.ToDto()).ToList();
 
-        return new PagedResponse<ProductDto>(
+        var pagedResponse = new PagedResponse<ProductDto>(
             products.PageNumber,
             products.PageSize,
             products.TotalItemCount,
             products.PageCount,
             productDtos
+        );
+
+        return new Response<PagedResponse<ProductDto>>(
+            true,
+            StatusCodes.Status200OK,
+            pagedResponse
         );
     }
 }

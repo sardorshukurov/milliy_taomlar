@@ -15,7 +15,7 @@ public class DeleteProductHandler(IDocumentSession session)
         {
             return new Response<Unit>(
                 false,
-                (int)HttpStatusCode.NotFound,
+                StatusCodes.Status404NotFound,
                 new Unit(),
                 "Product not found");
         }
@@ -24,6 +24,6 @@ public class DeleteProductHandler(IDocumentSession session)
         await session.SaveChangesAsync(cancellationToken);
 
         return new Response<Unit>(
-            true, (int)HttpStatusCode.OK, new Unit());
+            true, StatusCodes.Status200OK, new Unit());
     }
 }

@@ -51,6 +51,9 @@ public class ValidationBehavior<TRequest, TResponse>(
                     null,                                                    // Result
                     ValidationHelper.GetValidationErrorMessage(failures),   // ErrorMessage
                     null);                                                   // ErrorDetails
+
+                Console.WriteLine("[Validation Behaviour]");
+                Console.WriteLine(ValidationHelper.GetValidationErrorMessage(failures));
                 return (TResponse)responseInstance!;
             }
         }

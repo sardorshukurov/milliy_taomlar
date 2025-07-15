@@ -12,12 +12,10 @@ public class GetProductByIdEndpoint : ICarterModule
             var result = await sender.Send(query);
             var response = result.ToResponse();
 
-            return response.Product is null
-                ? Results.NotFound()
-                : Results.Ok(response);
+            return response.ToResult(res => Results.Ok(res));
         })
         .WithName("GetProductById")
-        .Produces<GetProductByIdResponse>()
+        .Produces<Response<GetProductByIdResponse>>()
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status404NotFound)
         .WithSummary("Get Product By Id")

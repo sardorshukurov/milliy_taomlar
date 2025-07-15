@@ -16,10 +16,10 @@ public class GetProductsEndpoint : ICarterModule
 
                 var result = await sender.Send(query);
 
-                return Results.Ok(result);
+                return result.ToResult(res => Results.Ok(res));
             })
             .WithName("GetProducts")
-            .Produces<PagedResponse<ProductDto>>()
+            .Produces<Response<PagedResponse<ProductDto>>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("Get Products")
             .WithDescription("Get Products");

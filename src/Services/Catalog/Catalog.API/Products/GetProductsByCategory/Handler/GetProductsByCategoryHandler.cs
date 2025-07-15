@@ -7,7 +7,7 @@ using GetProducts;
 public class GetProductsByCategoryHandler(IDocumentSession session)
     : IQueryHandler<GetProductsByCategoryQuery, GetProductsByCategoryResult>
 {
-    public async Task<GetProductsByCategoryResult> Handle(
+    public async Task<Response<GetProductsByCategoryResult>> Handle(
         GetProductsByCategoryQuery request, CancellationToken cancellationToken)
     {
         var products = (await session.Query<Product>()
@@ -16,6 +16,11 @@ public class GetProductsByCategoryHandler(IDocumentSession session)
             .ToListAsync(cancellationToken))
             .Select(p => p.ToDto());
 
-        return new GetProductsByCategoryResult(products);
+        var result = new Response<GetProductsByCategoryResult>(
+            true,
+            StatusCodes.Status200OK,
+            new(products));
+
+        return result;
     }
 }
