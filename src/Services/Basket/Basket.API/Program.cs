@@ -7,8 +7,10 @@ using Shared.Behaviors;
 using Shared.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString =
+var database =
     builder.Configuration.GetConnectionString("Database") ?? string.Empty;
+var redis = 
+    builder.Configuration.GetConnectionString("Redis") ?? string.Empty;
 
 builder.Services
     .AddExceptionHandler<GlobalExceptionHandler>()
@@ -22,13 +24,21 @@ builder.Services
     .AddValidatorsFromAssembly(typeof(Program).Assembly)
     .AddMarten(options =>
     {
-        options.Connection(connectionString);
+        options.Connection(database);
         options.Schema.For<ShoppingCart>().Identity(sc => sc.Username);
     }).UseLightweightSessions();
 
-builder.Services.AddHealthChecks().AddNpgSql(connectionString);
+builder.Services.AddHealthChecks()
+    .AddNpgSql(database)
+    .AddRedis(redis);
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = redis;
+});
 
 var app = builder.Build();
 
