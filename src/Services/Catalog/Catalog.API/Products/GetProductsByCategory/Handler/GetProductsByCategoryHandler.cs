@@ -1,4 +1,3 @@
-
 namespace Catalog.API.Products.GetProductsByCategory.Handler;
 
 using Entities;

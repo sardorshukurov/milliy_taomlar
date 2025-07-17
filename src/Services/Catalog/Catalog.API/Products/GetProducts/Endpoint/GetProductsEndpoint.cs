@@ -1,9 +1,8 @@
 
-using Catalog.API.Products.Dtos;
-using Catalog.API.Products.GetProducts.Handler;
-using Microsoft.AspNetCore.Mvc;
-
 namespace Catalog.API.Products.GetProducts.Endpoint;
+
+using Catalog.API.Products.GetProducts.Handler;
+using Dtos;
 
 public class GetProductsEndpoint : ICarterModule
 {

@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace Shared.Middlewares;
 
 using MediatR;
@@ -17,6 +19,11 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
 
         var (stackTrace, message, statusCode) = exception switch
         {
+            IOException => (
+                exception.StackTrace,
+                exception.Message,
+                StatusCodes.Status400BadRequest
+            ),
             ArgumentException => (
                 exception.StackTrace,
                 exception.Message,
@@ -42,6 +49,7 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
             stackTrace?.Trim()
         );
         
+        context.Response.StatusCode = statusCode;
         await context.Response.WriteAsJsonAsync(response, cancellationToken);
         return true;
     }

@@ -1,10 +1,7 @@
-using Catalog.API.Products.Dtos;
-
 namespace Catalog.API.Products.GetProducts;
 
+using Dtos;
 using Entities;
-using Endpoint;
-using Handler;
 
 public static class Mapper
 {

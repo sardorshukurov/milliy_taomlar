@@ -1,4 +1,3 @@
-
 namespace Catalog.API.Products.GetProductsByCategory.Endpoint;
 
 public class GetProductsByCategoryEndpoint : ICarterModule

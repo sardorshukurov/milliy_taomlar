@@ -1,6 +1,6 @@
 namespace Catalog.API.Products.GetProducts.Handler;
 
-using Products.Dtos;
+using Dtos;
 
 public record GetProductsQuery(PagedRequest<GetProductsFilter>? Request)
     : IPagedQuery<ProductDto>;

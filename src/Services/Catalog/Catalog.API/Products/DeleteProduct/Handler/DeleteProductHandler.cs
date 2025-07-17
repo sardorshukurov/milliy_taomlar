@@ -1,6 +1,5 @@
 namespace Catalog.API.Products.DeleteProduct.Handler;
 
-using System.Net;
 using Entities;
 
 public class DeleteProductHandler(IDocumentSession session)
