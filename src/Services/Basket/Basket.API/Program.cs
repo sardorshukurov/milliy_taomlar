@@ -1,5 +1,6 @@
 using Basket.API.Data;
 using Basket.API.Entities;
+using Discount.Grpc;
 using FluentValidation;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -11,6 +12,8 @@ var database =
     builder.Configuration.GetConnectionString("Database") ?? string.Empty;
 var redis = 
     builder.Configuration.GetConnectionString("Redis") ?? string.Empty;
+var discountUrl =
+    builder.Configuration["GrpcSettings:DiscountUrl"] ?? string.Empty;
 
 builder.Services
     .AddExceptionHandler<GlobalExceptionHandler>()
@@ -38,6 +41,11 @@ builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = redis;
+});
+
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+    options.Address = new Uri(discountUrl);
 });
 
 var app = builder.Build();

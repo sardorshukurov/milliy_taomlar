@@ -9,9 +9,6 @@ public class ResponseResult<T>(Response<T> response, Func<Response<T>, IResult> 
 {
     public async Task ExecuteAsync(HttpContext httpContext)
     {
-        Console.WriteLine("we hit here !!!!!!!!!!!!!!!!");
-        Console.WriteLine(response.ErrorMessage);
-        Console.WriteLine(response.ErrorDetails);
         if (response.IsSuccess)
         {
             var successResult = onSuccess(response);
