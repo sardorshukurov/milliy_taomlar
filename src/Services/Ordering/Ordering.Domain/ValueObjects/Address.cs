@@ -5,7 +5,7 @@ public record Address
     public string FirstName { get; } = string.Empty;
     public string LastName { get; } = string.Empty;
     public string Email { get; } = string.Empty;
-    public string AdressLine { get; } = string.Empty;
+    public string AddressLine { get; } = string.Empty;
     public string Country { get; } = string.Empty;
     public string State { get; } = string.Empty;
     public string ZipCode { get; } = string.Empty;
@@ -15,7 +15,7 @@ public record Address
         string firstName,
         string lastName,
         string email,
-        string adressLine,
+        string addressLine,
         string country,
         string state,
         string zipCode)
@@ -23,7 +23,7 @@ public record Address
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        AdressLine = adressLine;
+        AddressLine = addressLine;
         Country = country;
         State = state;
         ZipCode = zipCode;
