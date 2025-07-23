@@ -6,15 +6,14 @@ public class Customer : Entity<CustomerId>
 
     public string Email { get; private set; } = string.Empty;
 
-    public static Customer Create(string name, string email)
+    public static Customer Create(CustomerId id, string name, string email)
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(email);
 
-        var customerId = CustomerId.New();
         var customer = new Customer
         {
-            Id = customerId,
+            Id = id,
             Name = name,
             Email = email
         };
