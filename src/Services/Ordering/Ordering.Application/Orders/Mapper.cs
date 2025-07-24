@@ -1,10 +1,10 @@
-namespace Ordering.Application.Orders.Commands;
+namespace Ordering.Application.Orders;
 
-using CreateOrder;
-using UpdateOrder;
 using Dtos;
 using Domain.Entities;
 using Domain.ValueObjects;
+using Commands.CreateOrder;
+using Commands.UpdateOrder;
 
 public static class Mapper
 {
@@ -60,5 +60,44 @@ public static class Mapper
             payment.CardExpiration,
             payment.CardSecurityCode,
             payment.PaymentMethod);
+    }
+
+    public static AddressDto ToDto(this Address address)
+    {
+        return new AddressDto(
+            address.FirstName,
+            address.LastName,
+            address.Email,
+            address.AddressLine,
+            address.Country,
+            address.State,
+            address.ZipCode);
+    }
+
+    public static PaymentDto ToDto(this Payment payment)
+    {
+        return new PaymentDto(
+            payment.CardNumber,
+            payment.CardHolderName,
+            payment.CardExpiration,
+            payment.CardSecurityCode,
+            payment.PaymentMethod);
+    }
+
+    public static OrderDto ToDto(this Order order)
+    {
+        return new OrderDto(
+            order.Id.Value,
+            order.CustomerId.Value,
+            order.Name.Value,
+            order.ShippingAddress.ToDto(),
+            order.BillingAddress.ToDto(),
+            order.Payment.ToDto(),
+            order.Status,
+            [.. order.Items.Select(i => new OrderItemDto(
+                order.Id.Value,
+                i.ProductId.Value,
+                i.Quantity,
+                i.Price))]);
     }
 }
