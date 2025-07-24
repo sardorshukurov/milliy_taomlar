@@ -1,19 +1,18 @@
-namespace Ordering.Application.Orders.Commands.UpdateOrder;
+namespace Ordering.Application.Orders.Commands.DeleteOrder;
 
 using Data;
 using Domain.ValueObjects;
 using Microsoft.AspNetCore.Http;
 
-public class UpdateOrderHandler(IOrderingDbContext dbContext)
-    : ICommandHandler<UpdateOrderCommand, Unit>
+public class DeleteOrderHandler(IOrderingDbContext dbContext)
+    : ICommandHandler<DeleteOrderCommand, Unit>
 {
     public async Task<Response<Unit>> Handle(
-        UpdateOrderCommand command, CancellationToken cancellationToken)
+        DeleteOrderCommand command, CancellationToken cancellationToken)
     {
-        var orderId = OrderId.Of(command.Order.Id);
+        var orderId = OrderId.Of(command.OrderId);
         var order = await dbContext.Orders.FindAsync(
-            [orderId],
-            cancellationToken: cancellationToken);
+            [orderId], cancellationToken: cancellationToken);
 
         if (order is null)
         {
@@ -23,8 +22,7 @@ public class UpdateOrderHandler(IOrderingDbContext dbContext)
                 Unit.Value);
         }
 
-        order.UpdateEntity(command);
-
+        dbContext.Orders.Remove(order);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return new Response<Unit>(
