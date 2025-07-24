@@ -1,6 +1,7 @@
 namespace Ordering.Application.Orders.Commands;
 
 using CreateOrder;
+using UpdateOrder;
 using Dtos;
 using Domain.Entities;
 using Domain.ValueObjects;
@@ -27,6 +28,17 @@ public static class Mapper
 
         return order;
     }
+
+    public static void UpdateEntity(this Order order, UpdateOrderCommand command)
+    {
+        order.Update(
+            OrderName.Of(command.Order.Name),
+            command.Order.ShippingAddress.ToEntity(),
+            command.Order.BillingAddress.ToEntity(),
+            command.Order.Payment.ToEntity(),
+            command.Order.Status);
+    }
+
 
     public static Address ToEntity(this AddressDto address)
     {
