@@ -1,5 +1,6 @@
 namespace Ordering.Infrastructure;
 
+using Application.Data;
 using Data;
 using Data.Interceptors;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -23,6 +24,8 @@ public static class DependencyInjection
             options.AddInterceptors(serviceProvider.GetServices<ISaveChangesInterceptor>());
             options.UseSqlServer(connectionString);
         });
+
+        services.AddScoped<IOrderingDbContext, OrderingDbContext>();
 
         return services;
     }

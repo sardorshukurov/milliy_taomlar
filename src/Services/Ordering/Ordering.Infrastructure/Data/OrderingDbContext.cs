@@ -1,9 +1,10 @@
 namespace Ordering.Infrastructure.Data;
 
 using System.Reflection;
+using Application.Data;
 
 public class OrderingDbContext(DbContextOptions<OrderingDbContext> options)
-    : DbContext(options)
+    : DbContext(options), IOrderingDbContext
 {
     public DbSet<Customer> Customers => Set<Customer>();
 
