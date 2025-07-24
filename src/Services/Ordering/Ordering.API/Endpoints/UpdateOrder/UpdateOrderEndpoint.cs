@@ -1,23 +1,22 @@
-namespace Catalog.API.Products.DeleteProduct.Endpoint;
 
-using Handler;
+namespace Ordering.API.Endpoints.UpdateOrder;
 
-public class DeleteProductEndpoint : ICarterModule
+public class UpdateOrderEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/products/{id}", async (Guid id, ISender sender) =>
+        app.MapPut("/orders", async (UpdateOrderRequest request, ISender sender) =>
         {
-            var command = new DeleteProductCommand(id);
+            var command = request.ToCommand();
             var result = await sender.Send(command);
 
             return result.ToResult(res => Results.Ok(res));
         })
-        .WithName("DeleteProduct")
+        .WithName("UpdateOrder")
         .Produces<Response<Unit>>(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status404NotFound)
-        .WithSummary("Delete Product")
-        .WithDescription("Delete Product");
+        .WithSummary("Update Order")
+        .WithDescription("Update Order");
     }
 }

@@ -3,7 +3,7 @@ namespace Ordering.Application.Orders.Queries.GetOrders;
 using Dtos;
 using Shared.Models;
 
-public record GetOrdersQuery(PagedRequest<GetOrdersFilter> Request) : IPagedQuery<OrderDto>;
+public record GetOrdersQuery(PagedRequest<GetOrdersFilter>? Request) : IPagedQuery<OrderDto>;
 
 public record GetOrdersFilter(
     string? Name,

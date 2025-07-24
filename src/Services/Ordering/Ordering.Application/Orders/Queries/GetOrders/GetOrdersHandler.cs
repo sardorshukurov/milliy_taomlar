@@ -12,29 +12,33 @@ public class GetOrdersHandler(IOrderingDbContext dbContext)
     public async Task<Response<PagedResponse<OrderDto>>> Handle(
         GetOrdersQuery query, CancellationToken cancellationToken)
     {
-        if (query.Request.Filters is not null)
+        if (query.Request?.Filters is not null)
         {
             // TODO: apply filters
         }
 
         var totalCount = await dbContext.Orders.LongCountAsync(cancellationToken);
+
+        var page = query.Request?.Page ?? 1;
+        var pageSize = query.Request?.PageSize ?? 10;
+
         var orders = await dbContext.Orders
             .Include(o => o.Items)
             .AsNoTracking()
             .OrderBy(o => o.Name.Value)
-            .Skip(query.Request.Page * query.Request.PageSize)
-            .Take(query.Request.PageSize)
+            .Skip(page * pageSize)
+            .Take(pageSize)
             .Select(o => o.ToDto())
             .ToListAsync(cancellationToken);
 
-        var totalPages = (long)Math.Ceiling((double)totalCount / query.Request.PageSize);
+        var totalPages = (long)Math.Ceiling((double)totalCount / pageSize);
 
         return new Response<PagedResponse<OrderDto>>(
             true,
             StatusCodes.Status200OK,
             new PagedResponse<OrderDto>(
-                query.Request.Page,
-                query.Request.PageSize,
+                page,
+                pageSize,
                 totalCount,
                 totalPages,
                 orders));

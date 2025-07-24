@@ -27,7 +27,7 @@ public class DeleteOrderHandler(IOrderingDbContext dbContext)
 
         return new Response<Unit>(
             true,
-            StatusCodes.Status204NoContent,
+            StatusCodes.Status200OK,
             Unit.Value);
     }
 }
