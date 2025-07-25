@@ -6,11 +6,12 @@ using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Shared.Behaviors;
 using Shared.Middlewares;
+using Shared.Messaging.MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 var database =
     builder.Configuration.GetConnectionString("Database") ?? string.Empty;
-var redis = 
+var redis =
     builder.Configuration.GetConnectionString("Redis") ?? string.Empty;
 var discountUrl =
     builder.Configuration["GrpcSettings:DiscountUrl"] ?? string.Empty;
@@ -47,6 +48,8 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
 {
     options.Address = new Uri(discountUrl);
 });
+
+builder.Services.AddMessageBroker(builder.Configuration);
 
 var app = builder.Build();
 
