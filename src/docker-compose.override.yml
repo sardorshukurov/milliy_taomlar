@@ -38,6 +38,17 @@ services:
     ports:
       - "1433:1433"
 
+  messagebroker:
+    container_name: messagebroker
+    hostname: milliy-taomlar-mq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
   catalog.api:
     container_name: catalog.api
     environment:
@@ -60,6 +71,9 @@ services:
       - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true
       - ConnectionStrings__Redis=distributedcache:6379
       - GrpcSettings__DiscountUrl=http://discount.grpc:8080
+      - MessageBroker__Host=amqp://milliy-taomlar-mq:5672
+      - MessageBroker__Username=guest
+      - MessageBroker__Password=guest
     depends_on:
       - basketdb
       - distributedcache
@@ -77,3 +91,21 @@ services:
     ports:
       - "6002:8080"
       # - "6062:8081"
+
+  ordering.api:
+    container_name: ordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      # - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Server=orderdb;Port=1433;Database=OrderingDb;User Id=sa;Password=StrongPassword123!@#;Include Error Detail=true;Trust Server Certificate=true
+      - MessageBroker__Host=amqp://milliy-taomlar-mq:5672
+      - MessageBroker__Username=guest
+      - MessageBroker__Password=guest
+      - FeatureManagement__OrderFulfillment=true
+    depends_on:
+      - orderdb
+      - messagebroker
+    ports:
+      - "6003:8080"
+      # - "6063:8081"
