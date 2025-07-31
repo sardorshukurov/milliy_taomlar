@@ -1,6 +1,6 @@
-namespace Ordering.Application.Orders.EventHandlers;
+namespace Ordering.Application.Orders.EventHandlers.Domain;
 
-using Domain.Events;
+using Ordering.Domain.Events;
 using Microsoft.Extensions.Logging;
 
 public class OrderUpdatedEventHandler(ILogger<OrderUpdatedEventHandler> logger)
